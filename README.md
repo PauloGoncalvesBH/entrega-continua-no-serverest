@@ -1,7 +1,7 @@
 ---
 title: "Entrega contínua no ServeRest 🚀"
 published: true
-description: "Nesse texto irei relatar os ganhos e a implementação da tão desejada Entrega Contínua no SerVerest."
+description: "Nesse texto irei relatar os ganhos e a implementação da tão desejada Entrega Contínua no ServeRest."
 tags: continuousdelivery, serverest, ptbr
 canonical_url:
 cover_image:
