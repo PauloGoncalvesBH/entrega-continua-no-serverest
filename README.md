@@ -130,6 +130,7 @@ O desenvolvedor irá abrir no Github uma Pull Request para integrar a sua branch
 1. Validação da estrutura do código com `standard`. Executado na pipeline de integração contínua.
 
 **Print de validações feitas em um Pull Request:**
+
 ![](https://raw.githubusercontent.com/PauloGoncalvesBH/entrega-continua-no-serverest/master/images/ChecksPR.png)
 
 ---
@@ -145,6 +146,7 @@ Após o PR ser aprovado e integrado com a _master_, começa todo o processo de e
 Inicialmente são executados as mesmas validações feitas na PR (_commitlint_, _standard_ e _testes de API_). Apenas com a execução com sucesso de todas essas validações é que é iniciado o processo de entrega contínua.
 
 **Print da pipeline de Continuous Delivery:**
+
 ![](https://raw.githubusercontent.com/PauloGoncalvesBH/entrega-continua-no-serverest/master/images/CDGithubActions.png)
 
 Na atividade _release_ é executado o `semantic-release`, que utiliza a configuração implementada e realiza as tarefas de entrega contínua.
@@ -160,9 +162,11 @@ Inicialmente é validado se há commit, desde a última git tag, que gera uma no
 1. É feita comunicação aos interessados sobre a nova release. Veja mais na seção [Comunicação de release gerada](#comunicacao-de-release-gerada).
 
 **Print do commit do `semantic-release`:**
+
 ![](https://raw.githubusercontent.com/PauloGoncalvesBH/entrega-continua-no-serverest/master/images/commitGithub.png)
 
 **Print da release gerada no github:**
+
 ![](https://raw.githubusercontent.com/PauloGoncalvesBH/entrega-continua-no-serverest/master/images/releaseGithub.png)
 
 > Caso queira verificar com mais detalhes a configuração feita quanto ao `semantic-release`, verifique o arquivo [.releaserc.js](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/.releaserc.js) e o [workflow de continuous delivery](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/.github/workflows/continuous_delivery.yml) (a partir da linha 53).
@@ -178,6 +182,7 @@ Após a publicação da release em produção é preciso comunicar aos interessa
 O `semantic-release` verifica quais issues foram fechadas e quais PRs foram aprovados e que fazem parte da nova release. Com isso ele adiciona comentário informando de que uma nova release está disponível com a solução para a situação relatada e adiciona a label _released_.
 
 **Print de comentário e label automático em PR:**
+
 ![](https://raw.githubusercontent.com/PauloGoncalvesBH/entrega-continua-no-serverest/master/images/comentarioPR.png)
 
 ---
