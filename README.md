@@ -36,7 +36,7 @@ Antes de abordarmos a entrega contínua aplicada no _ServeRest_, temos que enten
 
 ##### ❓ O que é entrega contínua (Continuous delivery)?
 
-A definição de entrega contínua fornecida pelo continuousdelivery.com é:
+A definição de entrega contínua fornecida pelo <http://continuousdelivery.com> é:
 
 > Entrega Contínua é a capacidade de obter alterações de todos os tipos - incluindo novos recursos, alterações de configuração, correções de bugs e experimentos - em produção ou nas mãos dos usuários, com **segurança e rapidez**, de maneira sustentável.
 
@@ -54,7 +54,7 @@ Antes de passarmos por detalhes da entrega contínua, é importante entendermos 
 
 A entrega contínua foi importante para garantir a qualidade de software do _ServeRest_ e rapidez na entrega de novas releases. Com ela apenas código bem estruturado, que passa em todos os testes e possui boa mensagem de commit é integrado ao código. Além de que as releases são geradas apenas se necessário, de acordo com alguns critérios.
 
-Para o mantenedor do projeto, basta realizar code review em PR de outros colaboradores e realizar o merge com a master. Não terá mais a preocupação em atualizar a master local, criar tag, atualizar o changelog, commitar, executar `git pull` e `npm publish`.
+Para o mantenedor do projeto, basta realizar code review em PR de outros colaboradores e realizar o merge com a master. Não terá mais a preocupação em atualizar a master local, criar tag, atualizar o changelog, commitar, executar `git push` e `npm publish`.
 
 O impacto para o usuário é de que correções sejam liberadas de forma mais rápida e, principalmente, bugs em produção são menos frequentes.
 
