@@ -54,7 +54,7 @@ Antes de passarmos por detalhes da entrega contínua, é importante entendermos 
 
 A entrega contínua foi importante para garantir a qualidade de software do _ServeRest_ e rapidez na entrega de novas releases. Com ela apenas código bem estruturado, que passa em todos os testes e possui boa mensagem de commit é integrado ao código. Além de que as releases são geradas apenas se necessário, de acordo com alguns critérios.
 
-Para o mantenedor do projeto, basta realizar code review em PR de outros colaboradores e realizar o merge com a master. Não terá mais a preocupação em atualizar a master local, criar tag, atualizar o changelog, commitar, executar `git push` e `npm publish`.
+Para o mantenedor do projeto, basta realizar code review em PR de outros colaboradores e realizar o merge com a branch master ou beta. Não terá mais a preocupação em atualizar a master/beta local, criar tag, atualizar o changelog, commitar, executar `git push` e `npm publish` apontando para a tag correta (_@latest caso fosse a branch master e @beta caso fosse a branch beta_).
 
 O impacto para o usuário é de que correções sejam liberadas de forma mais rápida e, principalmente, bugs em produção são menos frequentes.
 
@@ -69,7 +69,8 @@ Para entregar o código em produção com rapidez e segurança, alguns itens ter
 1. As mensagens de commit deveriam seguir o padrão do [Conventional Commit](https://www.conventionalcommits.org/);
 1. Todas as alterações que geraram release deveriam estar documentadas no [Changelog](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/CHANGELOG.md);
 1. O versionamento deveria corresponder às alterações desde a última release e ao [Semantic versioning](https://semver.org/);
-1. A estratégia de branches deveria permitir integrar código na `master` apenas se todas as validações fossem validadas;
+1. A estratégia de branches deveria permitir integrar código na `master` e `beta` apenas se todas as validações fossem executadas;
+1. Publicar na dist-tag _@latest_ apenas o que fosse integrado na `master`, e _@beta_ o que fosse integrado na branch `beta`;
 1. Somente deveria ser feita publicação automática caso a alteração realizada necessitasse de publicação.
 
 ---
@@ -125,7 +126,7 @@ Libs: `supertest`, `commitlint` e `standard`
 O desenvolvedor irá abrir no Github uma Pull Request para integrar a sua branch com a _master_. O PR somente será mergeado caso as seguintes etapas sejam aprovadas:
 
 1. Code review de outro desenvolvedor;
-1. Validação dos testes de API criados com `supertest`. Executado na pipeline de integração contínua;
+1. Validação dos testes de API criados com `supertest` nas 3 principais versões LTS do node. Executado na pipeline de integração contínua;
 1. Validação da mensagem de commit com `commitlint`. Executado na pipeline de integração contínua;
 1. Validação da estrutura do código com `standard`. Executado na pipeline de integração contínua.
 
@@ -141,7 +142,7 @@ O desenvolvedor irá abrir no Github uma Pull Request para integrar a sua branch
 
 Lib: `semantic-release/*`
 
-Após o PR ser aprovado e integrado com a _master_, começa todo o processo de entrega contínua.
+Após o PR ser aprovado e integrado com a _master_ ou _beta_, começa todo o processo de entrega contínua.
 
 Inicialmente são executados as mesmas validações feitas na PR (_commitlint_, _standard_ e _testes de API_). Apenas com a execução com sucesso de todas essas validações é que é iniciado o processo de entrega contínua.
 
@@ -154,7 +155,7 @@ Na atividade _release_ é executado o `semantic-release`, que utiliza a configur
 Inicialmente é validado se há commit, desde a última git tag, que gera uma nova release `major`, `minor` ou `patch`. Caso esse critério seja atendido as seguintes ações são realizadas:
 
 1. A versão do _package.json_ e do _package-lock.json_ são atualizadas;
-1. É gerada as notas de release contendo informação dos últimos commits;
+1. É gerada as notas de release contendo informação de todos os commits desde a última git tag;
 1. O _CHANGELOG_ é atualizado com as notas de release;
 1. É realizado publicação no _NPM_, e o artefato é armazenado temporariamente;
 1. _package.json_, _package-lock.json_ e _CHANGELOG_ são commitados com nova tag e informação da nova release. É utilizado o usuário `semantic-release-bot`;
@@ -169,7 +170,7 @@ Inicialmente é validado se há commit, desde a última git tag, que gera uma no
 
 ![](https://raw.githubusercontent.com/PauloGoncalvesBH/entrega-continua-no-serverest/master/images/releaseGithub.png)
 
-> Caso queira verificar com mais detalhes a configuração feita quanto ao `semantic-release`, verifique o arquivo [.releaserc.js](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/.releaserc.js) e o [workflow de continuous delivery](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/.github/workflows/continuous_delivery.yml) (a partir da linha 53).
+> Caso queira verificar com mais detalhes a configuração feita quanto ao `semantic-release`, verifique o arquivo [.releaserc.js](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/.releaserc.js) e o [workflow de continuous delivery](https://github.com/PauloGoncalvesBH/ServeRest/blob/master/.github/workflows/continuous_delivery.yml) (a partir da linha 60).
 
 ---
 
@@ -179,7 +180,7 @@ Lib: `semantic-release`
 
 Após a publicação da release em produção é preciso comunicar aos interessados de que suas respectivas issues e PR foram corrigidas.
 
-O `semantic-release` verifica quais issues foram fechadas e quais PRs foram aprovados e que fazem parte da nova release. Com isso ele adiciona comentário informando de que uma nova release está disponível com a solução para a situação relatada e adiciona a label _released_.
+O `semantic-release` verifica quais issues foram fechadas e quais PRs foram aprovados e que fazem parte da nova release. Com isso ele adiciona comentário informando de que uma nova release está disponível com a solução para a situação relatada e adiciona as labels _released on @{tag}_ e _released on @{versão}_.
 
 **Print de comentário e label automático em PR:**
 
